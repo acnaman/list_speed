@@ -2,22 +2,24 @@
 #include <time.h>
 
 void bigmemory(int);
+void littlesize(int);
 
-struct STTEST{
-    char str[1000];
-};
+typedef struct {
+    char str[10000];
+} STTEST;
 
 int main(void** argc)
 {
     clock_t c_start, c_end;
     time_t t_start, t_end;
-    int size = 10000;
+    int size = 1000;
 
     /* 開始時間の測定 */
     c_start = clock();
     t_start = time(NULL);
 
-    bigmemory(size);
+    littlesize(size);
+    //bigmemory(size);
 
     /* 終了時間の測定 */
     c_end = clock();
@@ -31,13 +33,31 @@ int main(void** argc)
 void bigmemory(int size){
     int i;
     const int sz = size;
-    struct STTEST *ptstruct;
-    ptstruct = (struct STTEST*)malloc(sizeof(struct STTEST) * size);
+    const int BIGSIZE = 100000;
+    STTEST *ptstruct;
+    ptstruct = (STTEST*)malloc(sizeof(STTEST) * BIGSIZE);
     
     for(i = 0; i < sz ;i++){
         ptstruct[i].str[0] = '/0';
     }
-    free();
+    free(ptstruct);
+}
+
+/* 最小のサイズをalllocationし直す */
+void littlesize(int size){
+    int i;
+    const int sz = size;
+    STTEST *ptstruct;
+    
+    for(i = 0; i < sz ;i++){
+        if(i == 0) {
+            ptstruct = (STTEST*)malloc(sizeof(STTEST));
+        } else {
+            ptstruct = (STTEST*)realloc(ptstruct, sizeof(STTEST)*(i + 1));            
+        }
+        ptstruct[i].str[0] = '/0';
+    }
+    free(ptstruct);
 }
 
 
