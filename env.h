@@ -1,0 +1,1 @@
+#define STRUCT_SIZE 100
