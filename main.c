@@ -13,17 +13,19 @@ typedef struct {
 int main(void)
 {
     clock_t c_start, c_end;
-    int list_size = 10000;
+    int list_size = LIST_SIZE;
     int struct_size = sizeof(STTEST);
     double res1, res2, res3;
+    char filename[128];
     int i;
 
     FILE* fp;
-    fp = fopen("result.txt", "w");
+    sprintf(filename, "result/%d_%d.txt" , STRUCT_SIZE, LIST_SIZE);
+    fp = fopen(filename, "w");
     fprintf(fp, "length : %d\n", list_size);
     fprintf(fp, "struct size : %d\n", struct_size);
 
-    for(i = 0; i < list_size; i+=10){
+    for(i = COUNT_UP; i < list_size; i+=COUNT_UP){
         /* ]—ˆŒ^ */
         c_start = clock();
         littlesize(i);
@@ -69,7 +71,7 @@ void littlesize(int size){
 void bigmemory(int size){
     int i;
     const int sz = size;
-    const int BIGSIZE = 100000;
+    const int BIGSIZE = LIST_SIZE;
     STTEST *ptstruct;
 
     ptstruct = (STTEST*)malloc(sizeof(STTEST) * BIGSIZE);
@@ -80,7 +82,7 @@ void bigmemory(int size){
     free(ptstruct);
 }
 
-/* 100‚¸‚ÂŠm•Û‚·‚é */
+/* ˆê’è”‚¸‚ÂŠm•Û‚·‚é */
 void hundredtimes(int size){
     int i;
     const int sz = size;
@@ -88,9 +90,9 @@ void hundredtimes(int size){
     
     for(i = 0; i < sz ;i++){
         if(i == 0) {
-            ptstruct = (STTEST*)malloc(sizeof(STTEST)*100);
-        } else if (i % 100 == 0){
-            ptstruct = (STTEST*)realloc(ptstruct, sizeof(STTEST)*(i + 100));
+            ptstruct = (STTEST*)malloc(sizeof(STTEST)*ALLOC_COUNT);
+        } else if (i % ALLOC_COUNT == 0){
+            ptstruct = (STTEST*)realloc(ptstruct, sizeof(STTEST)*(i + ALLOC_COUNT));
         }
         ptstruct[i].str[0] = '/0';
     }

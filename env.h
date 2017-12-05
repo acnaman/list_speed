@@ -1,1 +1,4 @@
-#define STRUCT_SIZE 100
+#define STRUCT_SIZE 1000
+#define LIST_SIZE 1000
+#define COUNT_UP 10
+#define ALLOC_COUNT LIST_SIZE / 10

@@ -56,4 +56,4 @@ dkms.conf
 
 # project files
 main
-result.txt
+result/*.txt
