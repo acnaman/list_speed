@@ -53,3 +53,7 @@ dkms.conf
 
 # Visual Studio files
 .vs*
+
+# project files
+main
+result.txt
