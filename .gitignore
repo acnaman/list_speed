@@ -57,3 +57,4 @@ dkms.conf
 # project files
 main
 result/*.txt
+result/*.csv
