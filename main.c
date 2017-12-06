@@ -15,36 +15,39 @@ int main(void)
     clock_t c_start, c_end;
     int list_size = LIST_SIZE;
     int struct_size = sizeof(STTEST);
-    double res1, res2, res3;
+    int res1, res2, res3;
     char filename[128];
     int i;
 
     FILE* fp;
-    sprintf(filename, "result/%d_%d.txt" , STRUCT_SIZE, LIST_SIZE);
+    sprintf(filename, "result/%d_%d.csv" , STRUCT_SIZE, LIST_SIZE);
     fp = fopen(filename, "w");
     fprintf(fp, "length : %d\n", list_size);
     fprintf(fp, "struct size : %d\n", struct_size);
 
+    fprintf(fp, ",A.都度確保,B.一挙確保,C.折衷案\n", struct_size);
+
     for(i = COUNT_UP; i < list_size; i+=COUNT_UP){
-        /* 従来型 */
+        /* 都度確保 */
         c_start = clock();
         littlesize(i);
         c_end = clock();
-        res1 = (double)c_end - c_start;
+        res1 = (int)c_end - c_start;
 
-        /* 確保型 */
+        /* 一挙確保 */
         c_start = clock();
         bigmemory(i);
         c_end = clock();
-        res2 = (double)c_end - c_start;
+        res2 = (int)c_end - c_start;
         
         /* 折衷案 */
         c_start = clock();
         hundredtimes(i);
         c_end = clock();
-        res3 = (double)c_end - c_start;
+        res3 = (int)c_end - c_start;
 
-        fprintf(fp, "%d,%f,%f,%f\n", i, res1,res2,res3);
+        /* ファイル出力 */
+        fprintf(fp, "%d,%d,%d,%d\n", i, res1,res2,res3);
     }
     fclose(fp);
 
